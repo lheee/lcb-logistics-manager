@@ -3,9 +3,5 @@
 	<version>1</version>
 	<pluginVersion><![CDATA[3.7.3.201602250914-RELEASE]]></pluginVersion>
 	<configs>
-		<config>
-			<file>src/main/resources/Spring/springmvc.xml</file>
-			<name><![CDATA[springmvc]]></name>
-		</config>
 	</configs>
 </webflow-project-description>

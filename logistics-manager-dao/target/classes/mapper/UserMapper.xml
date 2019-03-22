@@ -102,7 +102,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.lcb.pojo.User" >
+  <insert id="insert" parameterType="com.lcb.pojo.User" useGeneratedKeys="true" keyProperty="userId">
     insert into t_user (user_id, user_name, real_name, 
       password, email, phone, 
       u1, u2)
@@ -110,7 +110,7 @@
       #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=BIGINT}, 
       #{u1,jdbcType=VARCHAR}, #{u2,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.lcb.pojo.User" >
+  <insert id="insertSelective" parameterType="com.lcb.pojo.User">
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -255,4 +255,8 @@
       u2 = #{u2,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
+  <!-- 在用户和角色关联表中插入数据，自动生成key -->
+  <insert id="inserUserAndRoleId">
+  	insert into t_user_role(user_id, role_id) values(#{param1}, #{param2})
+  </insert>
 </mapper>
