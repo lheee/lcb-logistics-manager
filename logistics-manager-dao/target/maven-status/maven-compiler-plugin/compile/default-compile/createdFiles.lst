@@ -1,0 +1,7 @@
+com\lcb\mapper\MenuMapper.class
+com\lcb\mapper\OrderMapper.class
+com\lcb\mapper\OrderDetailMapper.class
+com\lcb\mapper\RoleMapper.class
+com\lcb\mapper\BasicDataMapper.class
+com\lcb\mapper\UserMapper.class
+com\lcb\mapper\CustomerMapper.class

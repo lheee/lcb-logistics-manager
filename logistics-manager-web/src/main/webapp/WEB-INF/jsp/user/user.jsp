@@ -9,26 +9,6 @@
 <link href="/css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/js/jquery.js"></script>
 
-<script type="text/javascript">
-/* 	$(document).ready(function() {
-		$(".click").click(function() {
-			$(".tip").fadeIn(200);
-		});
-
-		$(".tiptop a").click(function() {
-			$(".tip").fadeOut(200);
-		});
-
-		$(".sure").click(function() {
-			
-		});
-
-		$(".cancel").click(function() {
-			$(".tip").fadeOut(100);
-		});
-
-	}); */
-</script>
 </head>
 <body>
 	<div class="place">
@@ -43,8 +23,10 @@
 
 		<div class="tools">
 			<ul class="toolbar">
-				<li class="click1"><a href="/user/userUpdate"><span><img src="/images/t01.png" /></span>添加</a></li>
-				<li class="click1"><a href="/user/userUpdate"><span><img src="/images/t02.png" /></span>修改</a></li>
+				<li class="click1"><a href="/user/userUpdate"><span><img
+							src="/images/t01.png" /></span>添加</a></li>
+				<li class="click"><a href="#"><span><img
+							src="/images/t02.png" /></span>修改</a></li>
 				<li><span><img src="/images/t03.png" /></span>删除</li>
 				<li><span><img src="/images/t04.png" /></span>统计</li>
 			</ul>
@@ -77,35 +59,33 @@
 						<td>${user.email }</td>
 						<td>${user.phone }</td>
 
-						<td><a href="#" class="tablelink">查看</a> <a href="#"
-							class="tablelink"> 删除</a></td>
+						<td><a href="/user/userUpdate?id=${user.userId }"
+							class="tablelink"><label>修改</label></a> 
+							<!-- 删除之前先确定 -->
+							<a href="javascript:void(0)" onclick="deleteUser(${user.userId})" class="tablelink"> 删除</a></td>
 					</tr>
 				</c:forEach>
 
 			</tbody>
 		</table>
 
-
-		<div class="tip">
-			<div class="tiptop">
-				<span>提示信息</span><a></a>
-			</div>
-
-			<div class="tipinfo">
-				<span><img src="/images/ticon.png" /></span>
-				<div class="tipright">
-					<p>是否确认对信息的修改 ？</p>
-					<cite>如果是请点击确定按钮 ，否则请点取消。</cite>
-				</div>
-			</div>
-
-			<div class="tipbtn">
-				<a href="#"><input name="" type="button" value="确定" /></a>&nbsp; <input
-					name="" type="button" class="cancel" value="取消" />
-			</div>
-		</div>
 	</div>
 	<script type="text/javascript">
+		<!-- 是否确定删除当前记录 -->
+		function deleteUser(id){
+			if(window.confirm("确定要删除当前记录么")){
+				location.href="/user/delete?id="+id;
+			}
+		}
+	
+		$(document).ready(function() {
+			$(".click").click(function() {
+				/* 将jQuery对象转换为js原生对象 */
+				$(".tablelink")[0].click();
+			});
+		
+		});
+		
 		$('.tablelist tbody tr:odd').addClass('odd');
 	</script>
 

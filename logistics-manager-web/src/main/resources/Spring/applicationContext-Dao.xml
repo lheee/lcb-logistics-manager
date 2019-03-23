@@ -8,7 +8,7 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
@@ -32,7 +32,7 @@
 		<!-- 加载mybatis的全局配置文件 -->
 		<property name="configLocation" value="classpath:mybatis/Mybatis-Config.xml" />
 		<!-- 因为映射文件和接口文件不在一个目录下（默认扫描当前目录），所以要配置一下，让他扫描全目录包括jar的mapper xml文件 -->
-		<property name="mapperLocations" value="classpath:mapper/*.xml"/>
+		<property name="mapperLocations" value="classpath*:mapper/*.xml"/>
 	</bean>
 	
 	<!-- 配置Mapper映射文件(java)的包扫描器 -->

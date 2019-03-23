@@ -45,6 +45,8 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void deleteUser(int id) {
 		// TODO Auto-generated method stub
+		//先删除多表关联关系，再删除用户信息
+		userMapper.deleteRoleByUserId(id);
 		userMapper.deleteByPrimaryKey(id);
 	}
 
@@ -54,7 +56,10 @@ public class UserServiceImpl implements IUserService {
 		// 如果id不为空就根据id查询一条user信息
 		if (id != null && id > 0) {
 			User user = userMapper.selectByPrimaryKey(id);
+			List<Integer> roleIds = userMapper.selectRoleIdByUserId(id);
+			// 再修改页面展示信息
 			model.addAttribute("user", user);
+			model.addAttribute("roleIds", roleIds);
 		}
 		UserExample example = new UserExample();
 		List<User> userList = userMapper.selectByExample(example);
@@ -67,24 +72,23 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void saveOrUpdate(UserDto userDto) {
 		// TODO Auto-generated method stub
-		System.out.println("进来service层了");
 		if (userDto != null) {
 			User user = userDto.getUser();
 			List<Integer> roleIds = userDto.getRoleIds();
-			System.out.println("user的值"+user.toString()+user.getUserName());
 			// 判断user的id属性是否有值
 			if (user.getUserId() != null && user.getUserId() > 0) {// 有值说明时修改操作
-
+				// 修改数据
+				//1、用户
+				userMapper.updateByPrimaryKeySelective(user);
+				//2、用户角色表,先删除后添加
+				userMapper.deleteRoleByUserId(user.getUserId());
 			} else {// 没值说明是添加操作,同时添加两张表,事务
-				System.out.println("添加操作");
-				//添加user表,添加成功后得到生成的对应id
+				// 添加user表,添加成功后得到生成的对应id
 				userMapper.insert(user);
-				System.out.println(user.getUserId());
-				if(roleIds!=null && roleIds.size()>0){//添加用户和角色管理表
-					for (Integer roleId : roleIds) {
-						userMapper.inserUserAndRoleId(user.getUserId(), roleId);
-					}
-					System.out.println("应该成功了");
+			}
+			if (roleIds != null && roleIds.size() > 0) {// 添加用户和角色管理表
+				for (Integer roleId : roleIds) {
+					userMapper.inserUserAndRoleId(user.getUserId(), roleId);
 				}
 			}
 		}

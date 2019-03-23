@@ -255,8 +255,16 @@
       u2 = #{u2,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
-  <!-- 在用户和角色关联表中插入数据，自动生成key -->
+  <!-- 在用户和角色关联表中插入数据 -->
   <insert id="inserUserAndRoleId">
   	insert into t_user_role(user_id, role_id) values(#{param1}, #{param2})
   </insert>
+  <!-- 根据用户id查询用户所拥有的角色的id -->
+  <select id="selectRoleIdByUserId" resultType="int">
+  	select role_id from t_user_role where user_id=#{id}
+  </select>
+  <!-- 根据userId删除用户角色关联表中的数据 -->
+  <delete id="deleteRoleByUserId">
+  	delete from t_user_role where user_id=#{id}
+  </delete>
 </mapper>
